@@ -1,21 +1,53 @@
-const progress1 = document.querySelector('.j-progress1');
+const progressClass  = '.j-progress1'
 
-// value начальное значение прогресс бара
-// increment приращение “+1%”, “+3%” и “+7%”.
-
-function addValueprogress(a, b) {
-    let value = a;
-    const increment = b;
-// стрелочная функция не имеет собственного контекста выполнения.
-// значение value и increment проваливается сверху
-    return(() => {
-        return value = value + increment;
-    })
+const progressObj = {
+// value  значение прогресс бара
+// increment приращение.
+    bar: document.querySelector(progressClass),
+    increment: null,
+    value() {
+        return parseInt(this.bar.style.width, 10);
+    },
+    append() {
+        value = this.value() + this.increment;
+        if (value <= 100) {
+            this.bar.style.width = `${value}%`;
+            this.bar.textContent = `${value}%`;
+        };
+    },
+    reset() {
+        this.bar.style.width = `0%`;
+        this.bar.textContent = `0%`;
+    },
 }
 
-let res1 = addValueprogress(0, 7);
-console.log(res1())
-console.log(res1())
-console.log(res1())
-console.log(res1())
-console.log(res1())
+// кнопки
+const btn1 = document.querySelector('.j-btn1');
+const btn3 = document.querySelector('.j-btn3');
+const btn7 = document.querySelector('.j-btn7');
+const btnReset = document.querySelector('.j-btn-reset');
+
+
+
+btn1.addEventListener('click', () => {
+    progressObj.increment = 1;
+    progressObj.append();
+  });
+
+btn3.addEventListener('click', () => {
+    progressObj.increment = 3;
+    progressObj.append();
+  });
+
+btn7.addEventListener('click', () => {
+    progressObj.increment = 7;
+    progressObj.append();
+  });
+
+btnReset.addEventListener('click', () => {
+    progressObj.reset();
+  });
+
+document.addEventListener("DOMContentLoaded", function(event) { 
+    // а тут нужно ждать когда загрузится весь код? вот эту часть можно убрать?
+  });
